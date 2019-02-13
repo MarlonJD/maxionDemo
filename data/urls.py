@@ -10,4 +10,5 @@ urlpatterns = [
     path('delete/<uuid:uuid>/', views.delete, name='delete'),
     path('deleteAll/', views.deleteAll, name='deleteAll'),
     path('makeDefault/<uuid:uuid>/', views.makeDefault, name='makeDefault'),
+    path('getJSON/', views.getJSON, name='getJSON'),
 ]

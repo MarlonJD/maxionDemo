@@ -1,7 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-
 from .models import DataSet
 from .forms import DocumentForm
 
@@ -27,6 +26,15 @@ def createData(request):
 def dataView(request, uuid):
     return render(request, 'data/dataView.html', 
     {'data':DataSet.objects.get(uuid=uuid)})
+
+def getJSON(request):
+    try:
+        d = DataSet.objects.values().get(default=True)
+    except (KeyError, DataSet.DoesNotExist):
+        return JsonResponse({'failed': 'There is no content here'})
+    else:
+        d["content"] = "https://maxion.ff-api.com/media/" + d["content"]
+        return JsonResponse(d)
 
 def delete(request, uuid):
     try:
