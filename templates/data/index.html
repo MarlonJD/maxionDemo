@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% load humanize %}
+
+{% block SiteTitle %}Maxion Demo{% endblock %}
+
+{% block mainHeading %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Veriler</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% if data %}
+
+    {% if not default %}
+    <div class="alert alert-danger" role="alert">
+        Dikkat! Herhangi bir veri varsayılan değil, lütfen varsayılan yapın.
+      </div>
+    {% endif %}
+        <div class="card-columns">
+            {% for data in data %}
+                <div class="card mb-4 shadow-sm">
+                    <img src="media/{{ data.content }}" class="img-fluid"/>
+                    <div class="card-body">
+                        <p class="card-text">{{ data.name }} {% if data.default %} <span class="badge badge-secondary">Varsayılan</span>{% endif %}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-outline-success" href="/makeDefault/{{ data.uuid }}/">Varsayılan Yap</a>
+                                <a class="btn btn-sm btn-outline-danger" href="/delete/{{ data.uuid }}/">Sil</a>
+                            </div>
+                            <small class="text-muted">{{ data.release_datetime | naturaltime }}</small>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="jumbotron">
+            <h1 class="display-4">Üzgünüz!</h1>
+            <p class="lead">Görünüşe göre hiç veri yok.</p>
+            <hr class="my-4">
+            <a class="btn btn-primary btn-lg" href="createData/" role="button">Veri ekle</a>
+        </div>
+    {% endif %}
+{% endblock %}
