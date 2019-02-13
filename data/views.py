@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from .models import DataSet
 from .forms import DocumentForm
+from .functions import *
 
 from django.views.decorators.csrf import csrf_protect
 
